@@ -1,0 +1,40 @@
+<header class="header">
+  <nav class="navbar">
+    <div class="nav-brand">
+      <a routerLink="/" class="brand-link">
+        <h1>Belle Mode</h1>
+      </a>
+    </div>
+    
+    <div class="nav-menu" [class.active]="isMenuOpen">
+      <ul class="nav-links">
+        <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
+        <li><a routerLink="/products" routerLinkActive="active">Products</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    
+    <div class="nav-actions">
+      <button class="search-btn" (click)="toggleSearch()">
+        <i class="search-icon">🔍</i>
+      </button>
+      <button class="cart-btn" (click)="toggleCart()">
+        <i class="cart-icon">🛒</i>
+        <span class="cart-count" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+      </button>
+      <button class="menu-toggle" (click)="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+  
+  <div class="search-overlay" [class.active]="isSearchOpen" (click)="closeSearch()">
+    <div class="search-container" (click)="$event.stopPropagation()">
+      <input type="text" placeholder="Search products..." [(ngModel)]="searchQuery" (keyup.enter)="performSearch()">
+      <button (click)="performSearch()">Search</button>
+    </div>
+  </div>
+</header>

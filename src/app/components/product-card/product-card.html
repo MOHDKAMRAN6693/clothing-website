@@ -1,0 +1,46 @@
+<div class="product-card" *ngIf="product">
+  <div class="product-image">
+    <img [src]="product.image" [alt]="product.name" />
+    <div class="product-overlay">
+      <button class="btn btn-primary" (click)="viewDetails()">Quick View</button>
+    </div>
+    <div class="product-badge" *ngIf="!product.inStock">Out of Stock</div>
+  </div>
+  
+  <div class="product-content">
+    <h3 class="product-name">{{ product.name }}</h3>
+    <p class="product-description">{{ product.description }}</p>
+    
+    <div class="product-rating" *ngIf="product.rating">
+      <div class="stars">
+        <span *ngFor="let star of getStars(product.rating)" [class.filled]="star">★</span>
+      </div>
+      <span class="rating-text">({{ product.reviews }} reviews)</span>
+    </div>
+    
+    <div class="product-price">
+      <span class="price">${{ product.price }}</span>
+    </div>
+    
+    <div class="product-actions" *ngIf="product.inStock">
+      <div class="size-color-selector">
+        <select [(ngModel)]="selectedSize" class="size-select">
+          <option value="">Select Size</option>
+          <option *ngFor="let size of product.sizes" [value]="size">{{ size }}</option>
+        </select>
+        
+        <select [(ngModel)]="selectedColor" class="color-select">
+          <option value="">Select Color</option>
+          <option *ngFor="let color of product.colors" [value]="color">{{ color }}</option>
+        </select>
+      </div>
+      
+      <button 
+        class="btn btn-primary add-to-cart" 
+        [disabled]="!selectedSize || !selectedColor"
+        (click)="onAddToCart()">
+        Add to Cart
+      </button>
+    </div>
+  </div>
+</div>

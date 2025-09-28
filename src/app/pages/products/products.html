@@ -1,0 +1,56 @@
+<div class="products-page">
+  <div class="container">
+    <div class="page-header">
+      <h1>Our Products</h1>
+      <p>Discover our latest collection of fashionable clothing</p>
+    </div>
+    
+    <div class="filters-section">
+      <div class="filters">
+        <div class="filter-group">
+          <label>Category:</label>
+          <select [(ngModel)]="selectedCategory" (change)="filterProducts()">
+            <option value="">All Categories</option>
+            <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label>Sort by:</label>
+          <select [(ngModel)]="sortBy" (change)="sortProducts()">
+            <option value="name">Name</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Rating</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label>Search:</label>
+          <input 
+            type="text" 
+            placeholder="Search products..." 
+            [(ngModel)]="searchQuery" 
+            (input)="searchProducts()"
+          />
+        </div>
+      </div>
+    </div>
+    
+    <div class="products-section">
+      <div class="products-grid" *ngIf="filteredProducts.length > 0">
+        <app-product-card 
+          *ngFor="let product of filteredProducts" 
+          [product]="product"
+          (addToCart)="onAddToCart($event)">
+        </app-product-card>
+      </div>
+      
+      <div class="no-products" *ngIf="filteredProducts.length === 0">
+        <h3>No products found</h3>
+        <p>Try adjusting your filters or search terms</p>
+        <button class="btn btn-primary" (click)="clearFilters()">Clear Filters</button>
+      </div>
+    </div>
+  </div>
+</div>

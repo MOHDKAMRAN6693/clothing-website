@@ -1,0 +1,66 @@
+<div class="home-page">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Embrace Your Femininity</h1>
+      <p class="hero-subtitle">Discover elegant pieces that celebrate your unique style and confidence</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" routerLink="/products">Shop Now</button>
+        <button class="btn btn-secondary">Learn More</button>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800" alt="Fashion Hero" />
+    </div>
+  </section>
+
+  <!-- Featured Categories -->
+  <section class="featured-categories">
+    <div class="container">
+      <h2 class="section-title">Curated Collections</h2>
+      <div class="categories-grid">
+        <div class="category-card" *ngFor="let category of categories">
+          <div class="category-image">
+            <img [src]="category.image" [alt]="category.name" />
+          </div>
+          <div class="category-content">
+            <h3>{{ category.name }}</h3>
+            <p>{{ category.description }}</p>
+            <button class="btn btn-outline" (click)="navigateToCategory(category.name)">Shop {{ category.name }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="featured-products">
+    <div class="container">
+      <h2 class="section-title">Trending Now</h2>
+      <div class="products-grid">
+        <app-product-card 
+          *ngFor="let product of featuredProducts" 
+          [product]="product"
+          (addToCart)="onAddToCart($event)">
+        </app-product-card>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-primary" routerLink="/products">View All Products</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="newsletter">
+    <div class="container">
+      <div class="newsletter-content">
+        <h2>Join Our Community</h2>
+        <p>Get exclusive access to new arrivals, styling tips, and special offers for the modern woman</p>
+        <div class="newsletter-form">
+          <input type="email" placeholder="Enter your email" [(ngModel)]="email" />
+          <button class="btn btn-primary" (click)="subscribe()">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

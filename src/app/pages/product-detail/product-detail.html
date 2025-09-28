@@ -1,0 +1,116 @@
+<div class="product-detail-page" *ngIf="product">
+  <div class="container">
+    <div class="breadcrumb">
+      <a routerLink="/">Home</a> / 
+      <a routerLink="/products">Products</a> / 
+      <span>{{ product.name }}</span>
+    </div>
+    
+    <div class="product-detail">
+      <div class="product-images">
+        <div class="main-image">
+          <img [src]="product.image" [alt]="product.name" />
+        </div>
+      </div>
+      
+      <div class="product-info">
+        <h1 class="product-title">{{ product.name }}</h1>
+        
+        <div class="product-rating" *ngIf="product.rating">
+          <div class="stars">
+            <span *ngFor="let star of getStars(product.rating)" [class.filled]="star">★</span>
+          </div>
+          <span class="rating-text">({{ product.reviews }} reviews)</span>
+        </div>
+        
+        <div class="product-price">
+          <span class="price">${{ product.price }}</span>
+        </div>
+        
+        <div class="product-description">
+          <h3>Description</h3>
+          <p>{{ product.description }}</p>
+        </div>
+        
+        <div class="product-options" *ngIf="product.inStock">
+          <div class="option-group">
+            <label>Size:</label>
+            <div class="size-options">
+              <button 
+                *ngFor="let size of product.sizes" 
+                [class.selected]="selectedSize === size"
+                (click)="selectSize(size)"
+                class="size-option">
+                {{ size }}
+              </button>
+            </div>
+          </div>
+          
+          <div class="option-group">
+            <label>Color:</label>
+            <div class="color-options">
+              <button 
+                *ngFor="let color of product.colors" 
+                [class.selected]="selectedColor === color"
+                (click)="selectColor(color)"
+                class="color-option">
+                {{ color }}
+              </button>
+            </div>
+          </div>
+          
+          <div class="option-group">
+            <label>Quantity:</label>
+            <div class="quantity-selector">
+              <button (click)="decreaseQuantity()" [disabled]="quantity <= 1">-</button>
+              <span>{{ quantity }}</span>
+              <button (click)="increaseQuantity()">+</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="product-actions">
+          <button 
+            class="btn btn-primary add-to-cart"
+            [disabled]="!selectedSize || !selectedColor || !product.inStock"
+            (click)="addToCart()">
+            {{ product.inStock ? 'Add to Cart' : 'Out of Stock' }}
+          </button>
+          
+          <button class="btn btn-outline wishlist">
+            ♥ Add to Wishlist
+          </button>
+        </div>
+        
+        <div class="product-features">
+          <h3>Features</h3>
+          <ul>
+            <li>Premium quality materials</li>
+            <li>Comfortable fit</li>
+            <li>Easy care instructions</li>
+            <li>30-day return policy</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="related-products" *ngIf="relatedProducts.length > 0">
+      <h2>Related Products</h2>
+      <div class="products-grid">
+        <app-product-card 
+          *ngFor="let relatedProduct of relatedProducts" 
+          [product]="relatedProduct"
+          (addToCart)="onAddToCart($event)">
+        </app-product-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="product-not-found" *ngIf="!product">
+  <div class="container">
+    <h1>Product Not Found</h1>
+    <p>The product you're looking for doesn't exist.</p>
+    <button class="btn btn-primary" routerLink="/products">Back to Products</button>
+  </div>
+</div>
